@@ -1,0 +1,44 @@
+<assembly>
+    <id>physical</id>
+    <formats>
+        <!--打包的文件格式,也可以有：war zip-->
+        <format>dir</format>
+        <format>tar.gz</format>
+    </formats>
+
+    <fileSets>
+
+        <!-- 把项目的脚本文件目录（ assembly/bin ）中的启动脚本，打包进压缩文件根目录 -->
+        <fileSet>
+            <directory>${project.basedir}/assembly/bin</directory>
+            <outputDirectory>/</outputDirectory>
+            <fileMode>0755</fileMode>
+            <includes>
+                <include>*.*</include>
+            </includes>
+        </fileSet>
+
+
+        <!-- 把项目的配置文件，打包进压缩文件conf目录 -->
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>*.xml</include>
+                <include>*.yml</include>
+                <include>*.properties</include>
+            </includes>
+        </fileSet>
+
+
+        <!-- 把项目自己编译出来的jar文件，打包进压缩文件lib目录 -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>${project.name}.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
