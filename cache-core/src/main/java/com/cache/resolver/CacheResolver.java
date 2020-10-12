@@ -6,7 +6,8 @@ package com.cache.resolver;
 
 import com.alibaba.fastjson.JSON;
 import com.cache.model.ContentModel;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -14,8 +15,9 @@ import java.util.*;
  * @author wengyz
  * @version CacheResolver.java, v 0.1 2020-10-10 11:16 上午
  */
-@Slf4j
 public class CacheResolver {
+
+    private static Logger logger = LoggerFactory.getLogger(CacheResolver.class);
 
     public static final Map<String, String> cache = new HashMap<>();
 
@@ -83,6 +85,7 @@ public class CacheResolver {
      */
     public static String del(ContentModel content) {
         cache.remove(content.getKey());
+        expireMap.remove(content.getKey());
         return "ok";
     }
 
@@ -90,7 +93,7 @@ public class CacheResolver {
      * 定期清楚过期key
      */
     public static void expire(){
-        if (expireMap == null || expireMap.size() == 0){
+        if (expireMap.size() == 0){
             return;
         }
         List<String> keys = new ArrayList<>();
@@ -104,6 +107,6 @@ public class CacheResolver {
                 cache.remove(next.getKey());
             }
         }
-        log.info("schedule del key = {}", JSON.toJSONString(keys));
+        logger.info("myCache expire del keys = {}", JSON.toJSONString(keys));
     }
 }

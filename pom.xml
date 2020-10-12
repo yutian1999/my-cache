@@ -12,36 +12,22 @@
         <module>cache-server</module>
         <module>cache-client</module>
         <module>cache-common</module>
+        <module>cache-core</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <lombok.version>1.16.22</lombok.version>
-        <netty.version>4.1.31.Final</netty.version>
         <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
 
-        <!--lombok语法糖-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.73</version>
-        </dependency>
-
     </dependencies>
 
     <build>
-        <finalName>inicWeChat</finalName>
+        <finalName>cache-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

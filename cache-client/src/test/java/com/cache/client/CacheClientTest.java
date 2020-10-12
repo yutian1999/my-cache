@@ -23,41 +23,39 @@ public class CacheClientTest {
 
     /**
      * set test
-     * @throws Exception e
      */
     @Test
-    public void setTest() throws Exception {
-        String hello = client.set("ccc", "222", 20);
-        System.out.println(hello);
+    public void setTest()  {
+        for (int i = 0; i < 1000; i++) {
+            client.set("myCache-" + i, "value-"+i, 200);
+        }
     }
 
     /**
      * setNx test
-     * @throws Exception e
      */
     @Test
-    public void setNxTest() throws Exception {
+    public void setNxTest() {
         String hello = client.setNx("lock1", "1", 2000000000);
         System.out.println(hello);
     }
 
     /**
      * get test
-     * @throws Exception e
      */
     @Test
-    public void getTest() throws Exception {
-        String hello = client.get("ccc");
+    public void getTest() {
+        String hello = client.get("myCache-2020");
         System.out.println(hello);
     }
 
     /**
      * del test
-     * @throws Exception e
      */
     @Test
-    public void delTest() throws Exception {
-        String hello = client.del("hello");
-        System.out.println(hello);
+    public void delTest() {
+        for (int i = 0; i < 1000; i++) {
+            client.del("myCache-" + i);
+        }
     }
 }

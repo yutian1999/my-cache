@@ -2,49 +2,27 @@
  * aljk.com
  * Copyright (C) 2013-2020 All Rights Reserved.
  */
-package com.cache.client;
-import com.alibaba.fastjson.JSON;
+package com.cache.help;
+
 import com.cache.enums.MyCacheOperateEnum;
 import com.cache.model.ContentModel;
 import com.cache.model.TransferModel;
-import okhttp3.*;
+import com.cache.resolver.CacheService;
 
 /**
  *
  * @author wengyz
- * @version CacheClient.java, v 0.1 2020-10-10 1:39 下午
+ * @version CacheHelper.java, v 0.1 2020-10-12 3:01 下午
  */
-public class CacheClient {
+public class CacheHelper {
 
-    private static String requestUrl;
+    private static final CacheHelper instance = new CacheHelper();
 
-    public static CacheClient getClient(String url){
-        return new CacheClient(url);
+    private CacheHelper() {
     }
 
-    private CacheClient(String url) {
-        requestUrl = url;
-    }
-
-    /**
-     * 底层请求
-     * @param param 参数
-     * @throws Exception 异常
-     */
-    private String post(String param) {
-        try{
-            OkHttpClient client = new OkHttpClient();
-            MediaType json = MediaType.parse("application/json; charset=utf-8");
-            RequestBody body = RequestBody.create(json, param);
-            Request req = new Request.Builder()
-                    .url(requestUrl)
-                    .post(body)
-                    .build();
-            Response response = client.newCall(req).execute();
-            return response.body().string();
-        }catch (Exception e){
-        }
-        return null;
+    public static CacheHelper init(){
+        return instance;
     }
 
     /**
@@ -62,7 +40,7 @@ public class CacheClient {
         content.setExpire(expire);
         model.setOperate(MyCacheOperateEnum.SET);
         model.setContent(content);
-        return post(JSON.toJSONString(model));
+        return CacheService.cacheCore(model);
     }
 
     /**
@@ -76,7 +54,7 @@ public class CacheClient {
         content.setKey(key);
         model.setOperate(MyCacheOperateEnum.GET);
         model.setContent(content);
-        return post(JSON.toJSONString(model));
+        return CacheService.cacheCore(model);
     }
 
     /**
@@ -84,13 +62,13 @@ public class CacheClient {
      * @param key key
      * @return 返回结果
      */
-    public String del(String key) {
+    public String del(String key){
         TransferModel model = new TransferModel();
         ContentModel content = new ContentModel();
         content.setKey(key);
         model.setOperate(MyCacheOperateEnum.DEL);
         model.setContent(content);
-        return post(JSON.toJSONString(model));
+        return CacheService.cacheCore(model);
     }
 
     /**
@@ -108,6 +86,6 @@ public class CacheClient {
         content.setExpire(expire);
         model.setOperate(MyCacheOperateEnum.SETNX);
         model.setContent(content);
-        return post(JSON.toJSONString(model));
+        return CacheService.cacheCore(model);
     }
 }

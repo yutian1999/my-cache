@@ -4,6 +4,7 @@
  */
 package com.cache.job;
 
+import com.cache.persist.CachePersist;
 import com.cache.resolver.CacheService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,16 @@ import org.springframework.stereotype.Component;
  * @version ExpireJob.java, v 0.1 2020-10-11 9:53 上午
  */
 @Component
-public class ExpireJob {
+public class CacheJob {
 
     @Scheduled(cron = "0 0/5 * * * ?")
     public void expireDel(){
         CacheService.expire();
+    }
+
+
+    @Scheduled(cron = "0 0/10 * * * ?")
+    public void persist(){
+        CachePersist.persist();
     }
 }

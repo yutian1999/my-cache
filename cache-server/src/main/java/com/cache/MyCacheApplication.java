@@ -4,6 +4,7 @@
  */
 package com.cache;
 
+import com.cache.init.CacheInit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,5 +23,7 @@ public class MyCacheApplication {
     public static void main(String[] args) {
         SpringApplication.run(MyCacheApplication.class,args);
         log.info("myCache init start ...");
+        CacheInit.init();
+        log.info("myCache init end ...");
     }
 }
