@@ -24,12 +24,14 @@ public class CacheService {
         MyCacheOperateEnum operate = model.getOperate();
         ContentModel content = model.getContent();
         switch (operate){
-            case PUT:
+            case SET:
                 return CacheResolver.put(content);
             case GET:
                 return CacheResolver.get(content);
             case DEL:
                 return CacheResolver.del(content);
+            case SETNX:
+                return CacheResolver.setNx(content);
             default:
                 return null;
         }

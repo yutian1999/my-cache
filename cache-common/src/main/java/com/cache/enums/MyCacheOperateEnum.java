@@ -11,12 +11,12 @@ package com.cache.enums;
  */
 public enum  MyCacheOperateEnum {
 
-    PUT,
+    SET,
 
     GET,
 
     DEL,
 
-    EXPIRE;
+    SETNX;
 
 }

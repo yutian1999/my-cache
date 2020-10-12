@@ -55,13 +55,13 @@ public class CacheClient {
      * @return 结果
      * @throws Exception 异常
      */
-    public String put(String key,String value,int expire) throws Exception {
+    public String set(String key,String value,int expire) throws Exception {
         TransferModel model = new TransferModel();
         ContentModel content = new ContentModel();
         content.setKey(key);
         content.setValue(value);
         content.setExpire(expire);
-        model.setOperate(MyCacheOperateEnum.PUT);
+        model.setOperate(MyCacheOperateEnum.SET);
         model.setContent(content);
         return post(JSON.toJSONString(model));
     }
@@ -92,6 +92,25 @@ public class CacheClient {
         ContentModel content = new ContentModel();
         content.setKey(key);
         model.setOperate(MyCacheOperateEnum.DEL);
+        model.setContent(content);
+        return post(JSON.toJSONString(model));
+    }
+
+    /**
+     * 分布式锁
+     * @param key k
+     * @param value v
+     * @param expire 过期时间
+     * @return 返回值
+     * @throws Exception e
+     */
+    public String setNx(String key,String value,int expire) throws Exception {
+        TransferModel model = new TransferModel();
+        ContentModel content = new ContentModel();
+        content.setKey(key);
+        content.setValue(value);
+        content.setExpire(expire);
+        model.setOperate(MyCacheOperateEnum.SETNX);
         model.setContent(content);
         return post(JSON.toJSONString(model));
     }

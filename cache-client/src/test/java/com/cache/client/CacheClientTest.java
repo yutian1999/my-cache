@@ -21,18 +21,40 @@ public class CacheClientTest {
         client = CacheClient.getClient("http:/127.0.0.1:8111/cache");
     }
 
+    /**
+     * set test
+     * @throws Exception e
+     */
     @Test
-    public void putTest() throws Exception {
-        String hello = client.put("ccc", "222", 20);
+    public void setTest() throws Exception {
+        String hello = client.set("ccc", "222", 20);
         System.out.println(hello);
     }
 
+    /**
+     * setNx test
+     * @throws Exception e
+     */
+    @Test
+    public void setNxTest() throws Exception {
+        String hello = client.setNx("lock1", "1", 2000000000);
+        System.out.println(hello);
+    }
+
+    /**
+     * get test
+     * @throws Exception e
+     */
     @Test
     public void getTest() throws Exception {
-        String hello = client.get("hello");
+        String hello = client.get("ccc");
         System.out.println(hello);
     }
 
+    /**
+     * del test
+     * @throws Exception e
+     */
     @Test
     public void delTest() throws Exception {
         String hello = client.del("hello");

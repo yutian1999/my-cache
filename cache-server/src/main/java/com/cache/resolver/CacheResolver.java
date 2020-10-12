@@ -19,7 +19,7 @@ public class CacheResolver {
 
     public static final Map<String, String> cache = new HashMap<>();
 
-    public static final Map<String, Integer> expireMap = new HashMap<>();
+    public static final Map<String, Long> expireMap = new HashMap<>();
 
     /**
      * 添加
@@ -31,7 +31,7 @@ public class CacheResolver {
         cache.put(content.getKey(), content.getValue());
         Integer expire = content.getExpire();
         if (expire != null) {
-            int l = (int) (System.currentTimeMillis() / 1000);
+            long l = System.currentTimeMillis() / 1000;
             expireMap.put(content.getKey(), l + expire);
         }
         return "ok";
@@ -60,7 +60,7 @@ public class CacheResolver {
         String key = content.getKey();
         String s = cache.get(key);
         if (s != null) {
-            Integer ex = expireMap.get(key);
+            Long ex = expireMap.get(key);
             if (ex == null) {
                 return s;
             }
@@ -94,9 +94,9 @@ public class CacheResolver {
             return;
         }
         List<String> keys = new ArrayList<>();
-        Iterator<Map.Entry<String, Integer>> iterator = expireMap.entrySet().iterator();
+        Iterator<Map.Entry<String, Long>> iterator = expireMap.entrySet().iterator();
         while (iterator.hasNext()){
-            Map.Entry<String, Integer> next = iterator.next();
+            Map.Entry<String, Long> next = iterator.next();
             long curr = System.currentTimeMillis() / 1000;
             if (curr > next.getValue()) {
                 keys.add(next.getKey());
