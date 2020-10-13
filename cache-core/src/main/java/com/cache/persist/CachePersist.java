@@ -6,6 +6,8 @@ package com.cache.persist;
 import com.cache.Utils.StringUtils;
 import com.cache.resolver.CacheResolver;
 import org.apache.commons.lang3.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.*;
@@ -19,8 +21,10 @@ import java.util.Set;
  * @version CachePersist.java, v 0.1 2020-10-12 10:44 上午
  */
 public class CachePersist {
+    private static Logger logger = LoggerFactory.getLogger(CachePersist.class);
 
     public static void persist(){
+        long start = System.currentTimeMillis();
         File file = cacheFile();
         BufferedWriter write = null;
         try {
@@ -58,6 +62,8 @@ public class CachePersist {
                 }
             }
         }
+        long end = System.currentTimeMillis();
+        logger.info("myCache persist useTime = {}",(end -start) + "ms");
     }
 
     private static String getContent(String key,String value,Long expire) {

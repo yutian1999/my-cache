@@ -93,6 +93,7 @@ public class CacheResolver {
      * 定期清楚过期key
      */
     public static void expire(){
+        long start = System.currentTimeMillis();
         if (expireMap.size() == 0){
             return;
         }
@@ -107,6 +108,7 @@ public class CacheResolver {
                 cache.remove(next.getKey());
             }
         }
-        logger.info("myCache expire del keys = {}", JSON.toJSONString(keys));
+        long end = System.currentTimeMillis();
+        logger.info("myCache expire del keys = {},useTime = {}", JSON.toJSONString(keys),(end -start) + "ms");
     }
 }

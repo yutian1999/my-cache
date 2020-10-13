@@ -27,7 +27,7 @@ public class CacheClientTest {
     @Test
     public void setTest()  {
         for (int i = 0; i < 1000; i++) {
-            client.set("myCache-" + i, "value-"+i, 200);
+            client.set("myCache-" + i, "value-"+i, 20000);
         }
     }
 

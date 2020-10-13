@@ -10,3 +10,16 @@
 ##### 3.支持分布式锁
 ##### 4.支持持久化
 ##### 5.支持服务端远程调用&本地jar依赖
+
+
+## 部署
+
+package cache-server
+
+cache-server-physical.tar.gz
+
+tar -zxvf cache-server-physical.tar.gz
+
+cd cache-server
+
+sh server.sh start dev null
