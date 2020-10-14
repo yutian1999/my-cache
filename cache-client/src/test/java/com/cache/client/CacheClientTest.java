@@ -54,8 +54,6 @@ public class CacheClientTest {
      */
     @Test
     public void delTest() {
-        for (int i = 0; i < 1000; i++) {
-            client.del("myCache-" + i);
-        }
+        client.del("lock1");
     }
 }

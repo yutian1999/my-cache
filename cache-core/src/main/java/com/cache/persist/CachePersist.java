@@ -66,7 +66,7 @@ public class CachePersist {
         logger.info("myCache persist useTime = {}",(end -start) + "ms");
     }
 
-    private static String getContent(String key,String value,Long expire) {
+    public static String getContent(String key,String value,Long expire) {
         return key + ":" + value + ":"+ expire + ",";
     }
 

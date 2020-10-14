@@ -5,7 +5,12 @@
 package com.cache.resolver;
 
 import com.alibaba.fastjson.JSON;
+import com.cache.config.MyCacheConfig;
 import com.cache.model.ContentModel;
+import com.cache.persist.CachePersist;
+import com.cache.sync.TextWebSocketFrameHandler;
+import com.cache.sync.transfer.SyncType;
+import com.cache.sync.transfer.TransferData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +41,17 @@ public class CacheResolver {
             long l = System.currentTimeMillis() / 1000;
             expireMap.put(content.getKey(), l + expire);
         }
+        if(MyCacheConfig.getConf("myCache.master").equals("true")){
+            sendSave(content);
+        }
         return "ok";
+    }
+
+    private static void sendSave(ContentModel content) {
+        TransferData data = new TransferData();
+        data.setType(SyncType.add);
+        data.setContent(CachePersist.getContent(content.getKey(),content.getValue(),content.getExpire().longValue()));
+        TextWebSocketFrameHandler.send(data);
     }
 
     /**
@@ -84,9 +99,22 @@ public class CacheResolver {
      * @return 返回值
      */
     public static String del(ContentModel content) {
+        if (!cache.containsKey(content.getKey())){
+            return "ok";
+        }
         cache.remove(content.getKey());
         expireMap.remove(content.getKey());
+        if(MyCacheConfig.getConf("myCache.master").equals("true")){
+            sendDel(content);
+        }
         return "ok";
+    }
+
+    private static void sendDel(ContentModel content) {
+        TransferData data = new TransferData();
+        data.setType(SyncType.del);
+        data.setContent(content.getKey());
+        TextWebSocketFrameHandler.send(data);
     }
 
     /**

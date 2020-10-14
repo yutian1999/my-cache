@@ -35,20 +35,7 @@ public class Persist2Memory {
                 return;
             }
             for (String line : lines) {
-                String[] datas = line.split(",");
-                for (String data : datas) {
-                    String[] elements = data.split(":");
-                    if (elements[2] == null){
-                        CacheResolver.cache.put(elements[0],elements[1]);
-                    }else {
-                        long curr = System.currentTimeMillis() / 1000;
-                        if (curr < Long.parseLong(elements[2])) {
-                            CacheResolver.cache.put(elements[0],elements[1]);
-                            CacheResolver.expireMap.put(elements[0],Long.parseLong(elements[2]));
-                        }
-                    }
-
-                }
+                persist2Memory(line);
             }
         } catch (Exception e) {
             logger.error("myCache init error = ",e);
@@ -58,6 +45,22 @@ public class Persist2Memory {
                     reader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void persist2Memory(String line) {
+        String[] datas = line.split(",");
+        for (String data : datas) {
+            String[] elements = data.split(":");
+            if (elements[2] == null){
+                CacheResolver.cache.put(elements[0],elements[1]);
+            }else {
+                long curr = System.currentTimeMillis() / 1000;
+                if (curr < Long.parseLong(elements[2])) {
+                    CacheResolver.cache.put(elements[0],elements[1]);
+                    CacheResolver.expireMap.put(elements[0],Long.parseLong(elements[2]));
                 }
             }
         }
