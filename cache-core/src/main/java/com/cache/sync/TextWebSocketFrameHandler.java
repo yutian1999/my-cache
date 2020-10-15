@@ -30,9 +30,9 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
         channel = ctx;
         //是否握手成功，升级为 Websocket 协议
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
-            ctx.writeAndFlush(new TextWebSocketFrame("主从握手成功"));
+            ctx.writeAndFlush(new TextWebSocketFrame("salve connect master"));
             SocketAddress address = ctx.channel().remoteAddress();
-            log.info("userEventTriggered >> address = {}",address);
+            log.info("salve connect master >> salve = {}",address);
             // 握手成功后要进行文件同步 之后通过命令传播的模式进行主从同步
             sync(ctx);
         }
