@@ -38,14 +38,13 @@ public class SocketClient extends WebSocketClient {
         String[] content = data.getContent().split(":");
         switch (data.getType()){
             case add:
-                CacheHelper.init().set(content[0],content[1],Integer.parseInt(content[2]));
+                CacheHelper.init().set(content[0],content[1],Integer.parseInt(content[2].replace(",","")));
                 return;
             case del:
                 CacheHelper.init().del(content[0]);
                 return;
             case sync:
                 Persist2Memory.persist2Memory(data.getContent());
-                return;
         }
     }
 

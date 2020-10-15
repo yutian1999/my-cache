@@ -4,6 +4,8 @@
  */
 package com.cache.gateway;
 
+import com.cache.config.MyCacheConfig;
+import com.cache.enums.MyCacheOperateEnum;
 import com.cache.model.TransferModel;
 import com.cache.resolver.CacheService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,11 @@ public class GatewayController {
      */
     @RequestMapping("/cache")
     public String gateway(@RequestBody TransferModel model){
+        if(!MyCacheConfig.getConf("myCache.master").equals("true")) {
+            if (!model.getOperate().equals(MyCacheOperateEnum.GET)){
+                return "salve node only have read auth";
+            }
+        }
         return CacheService.cacheCore(model);
     }
 }

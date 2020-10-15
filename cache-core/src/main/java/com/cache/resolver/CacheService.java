@@ -4,6 +4,7 @@
  */
 package com.cache.resolver;
 
+import com.cache.config.MyCacheConfig;
 import com.cache.enums.MyCacheOperateEnum;
 import com.cache.model.ContentModel;
 import com.cache.model.TransferModel;
@@ -23,18 +24,19 @@ public class CacheService {
     public static String cacheCore(TransferModel model){
         MyCacheOperateEnum operate = model.getOperate();
         ContentModel content = model.getContent();
+
         switch (operate){
-            case SET:
-                return CacheResolver.put(content);
-            case GET:
-                return CacheResolver.get(content);
-            case DEL:
-                return CacheResolver.del(content);
-            case SETNX:
-                return CacheResolver.setNx(content);
-            default:
-                return null;
-        }
+        case SET:
+            return CacheResolver.put(content);
+        case GET:
+            return CacheResolver.get(content);
+        case DEL:
+            return CacheResolver.del(content);
+        case SETNX:
+            return CacheResolver.setNx(content);
+        default:
+            return null;
+    }
     }
 
     /**

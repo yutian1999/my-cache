@@ -10,6 +10,7 @@ import com.cache.sync.WebSocketServer;
 import com.cache.sync.client.SalveClient;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -21,10 +22,12 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class CacheInit {
 
+    private static int againTimes = 0;
+
     public static void init(){
         // 加载配置信息
         MyCacheConfig.loadProperties();
-        log.info("load properties success");
+        log.info("load config success");
         // 持久化数据加载到内存
         Persist2Memory.persist2Memory();
         log.info("load persist data success");
@@ -42,7 +45,16 @@ public class CacheInit {
 
         // 主从同步socket客户端启动
         if(MyCacheConfig.getConf("myCache.salve").equals("true")){
-            CompletableFuture.runAsync(()->SalveClient.clientInit());
+            CompletableFuture.runAsync(()-> {
+                try {
+                    SalveClient.clientInit().connect();
+                } catch (URISyntaxException e) {
+                    while (againTimes ++ < 5){
+                        SalveClient.connect();
+                    }
+                }
+            });
+            log.info("salve node start success");
         }
     }
 }

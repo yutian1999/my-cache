@@ -22,7 +22,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-        log.info("channelRead0 >> msg = {}",msg);
+        log.info("master receive salve heart data ");
     }
 
     @Override
@@ -54,6 +54,8 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     }
 
     public static void send(TransferData data){
-        channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(data)));
+        if (channel != null){
+            channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(data)));
+        }
     }
 }

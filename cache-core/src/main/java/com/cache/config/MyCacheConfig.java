@@ -4,6 +4,8 @@
  */
 package com.cache.config;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
  * @author wengyz
  * @version MyCacheConfig.java, v 0.1 2020-10-14 2:02 下午
  */
+@Slf4j
 public class MyCacheConfig {
 
     public static final Map<String,String> config = new HashMap<>();
@@ -36,7 +39,7 @@ public class MyCacheConfig {
                 config.put(conf[0],conf[1]);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("loadProperties >> error = ",e);
         }
     }
 }

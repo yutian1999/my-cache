@@ -12,13 +12,13 @@ import org.junit.Test;
  * @author wengyz
  * @version CacheClientTest.java, v 0.1 2020-10-10 5:38 下午
  */
-public class CacheClientTest {
+public class CacheClientSalveTest {
 
     CacheClient client;
 
     @Before
     public void before(){
-        client = CacheClient.getClient("http:/192.168.1.45:8111/cache");
+        client = CacheClient.getClient("http:/192.168.1.44:8111/cache");
     }
 
     /**
@@ -27,8 +27,8 @@ public class CacheClientTest {
     @Test
     public void setTest()  {
 
-        String set = client.set("node", "love", 200000);
-        System.out.println(set);
+        String hello = client.set("hello", "value-", 20000);
+        System.out.println(hello);
     }
 
     /**
@@ -45,7 +45,7 @@ public class CacheClientTest {
      */
     @Test
     public void getTest() {
-        String hello = client.get("node");
+        String hello = client.get("test");
         System.out.println(hello);
     }
 
@@ -54,6 +54,6 @@ public class CacheClientTest {
      */
     @Test
     public void delTest() {
-        client.del("node");
+        client.del("lock1");
     }
 }

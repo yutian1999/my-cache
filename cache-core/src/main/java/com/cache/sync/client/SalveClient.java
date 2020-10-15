@@ -6,9 +6,8 @@ package com.cache.sync.client;
 
 import com.cache.config.MyCacheConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.java_websocket.client.WebSocketClient;
-
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  *
@@ -18,15 +17,24 @@ import java.net.URI;
 @Slf4j
 public class SalveClient {
 
-    public static WebSocketClient clientInit(){
-        try {
-            WebSocketClient webSocketClient = new SocketClient(new URI(MyCacheConfig.getConf("myCache.master.server.url"))) ;
-            webSocketClient.connect();
-            log.info("salve node start success");
-            return webSocketClient;
-        } catch (Exception e) {
-            e.printStackTrace();
+    private  static SocketClient webSocketClient = null;
+
+    public static synchronized SocketClient clientInit() throws URISyntaxException {
+
+        if (webSocketClient == null){
+            webSocketClient = new SocketClient(new URI(MyCacheConfig.getConf("myCache.master.server.url"))) ;
         }
-        return null;
+        return webSocketClient;
     }
+
+    public static void  connect(){
+        try {
+            webSocketClient = new SocketClient(new URI(MyCacheConfig.getConf("myCache.master.server.url"))) ;
+            webSocketClient.connect();
+            Thread.sleep(1000);
+        } catch (Exception ex) {
+            log.error("salve to master error = ",ex);
+        }
+    }
+
 }
