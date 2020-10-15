@@ -56,5 +56,6 @@ public class SocketClient extends WebSocketClient {
     @Override
     public void onError(Exception ex) {
         log.info("connect error = {}",ex.getMessage());
+        // todo 断线后重连
     }
 }

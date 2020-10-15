@@ -47,7 +47,7 @@ public class CacheJob {
         if(MyCacheConfig.getConf("myCache.salve").equals("true")) {
             try {
                 SalveClient.clientInit().send("salve to master health");
-            } catch (URISyntaxException e) {
+            } catch (Exception e) {
                 log.error("salve to master error = ",e);
                 SalveClient.connect();
             }

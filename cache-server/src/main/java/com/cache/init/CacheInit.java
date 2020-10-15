@@ -48,7 +48,7 @@ public class CacheInit {
             CompletableFuture.runAsync(()-> {
                 try {
                     SalveClient.clientInit().connect();
-                } catch (URISyntaxException e) {
+                } catch (Exception e) {
                     while (againTimes ++ < 5){
                         SalveClient.connect();
                     }
