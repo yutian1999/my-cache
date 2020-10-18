@@ -4,13 +4,13 @@
  */
 package com.cache.init;
 
-import com.cache.config.MyCacheConfig;
+import com.cache.config.MyCacheConf;
+import com.cache.config.MyCacheConfigLoader;
+import com.cache.enums.ServerTypeEnum;
 import com.cache.persist.Persist2Memory;
 import com.cache.sync.WebSocketServer;
 import com.cache.sync.client.SalveClient;
 import lombok.extern.slf4j.Slf4j;
-
-import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -26,14 +26,14 @@ public class CacheInit {
 
     public static void init(){
         // 加载配置信息
-        MyCacheConfig.loadProperties();
+        MyCacheConfigLoader.loadProperties();
         log.info("load config success");
         // 持久化数据加载到内存
         Persist2Memory.persist2Memory();
         log.info("load persist data success");
 
         // 主从同步socket服务端启动
-        if(MyCacheConfig.getConf("myCache.master").equals("true")){
+        if(MyCacheConf.serverType.equals(ServerTypeEnum.master_salve) && MyCacheConf.isMaster.equals("true")){
             CompletableFuture.runAsync(()-> WebSocketServer.inst().start());
         }
 
@@ -44,7 +44,7 @@ public class CacheInit {
         }
 
         // 主从同步socket客户端启动
-        if(MyCacheConfig.getConf("myCache.salve").equals("true")){
+        if(MyCacheConf.serverType.equals(ServerTypeEnum.master_salve) && MyCacheConf.IsSalve.equals("true")){
             CompletableFuture.runAsync(()-> {
                 try {
                     SalveClient.clientInit().connect();

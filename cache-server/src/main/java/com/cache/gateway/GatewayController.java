@@ -4,8 +4,9 @@
  */
 package com.cache.gateway;
 
-import com.cache.config.MyCacheConfig;
+import com.cache.config.MyCacheConf;
 import com.cache.enums.MyCacheOperateEnum;
+import com.cache.enums.ServerTypeEnum;
 import com.cache.model.TransferModel;
 import com.cache.resolver.CacheService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,12 @@ public class GatewayController {
      */
     @RequestMapping("/cache")
     public String gateway(@RequestBody TransferModel model){
-        if(!MyCacheConfig.getConf("myCache.master").equals("true")) {
+
+        if (model.getOperate().equals(MyCacheOperateEnum.CONNECT)){
+            return "connect success";
+        }
+
+        if(MyCacheConf.serverType.equals(ServerTypeEnum.master_salve) && MyCacheConf.IsSalve.equals("true")) {
             if (!model.getOperate().equals(MyCacheOperateEnum.GET)){
                 return "salve node only have read auth";
             }

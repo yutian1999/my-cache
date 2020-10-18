@@ -110,4 +110,14 @@ public class CacheClient {
         model.setContent(content);
         return post(JSON.toJSONString(model));
     }
+
+    /**
+     * 连接服务端
+     * @return 返回结果
+     */
+    public String connect() {
+        TransferModel model = new TransferModel();
+        model.setOperate(MyCacheOperateEnum.CONNECT);
+        return post(JSON.toJSONString(model));
+    }
 }

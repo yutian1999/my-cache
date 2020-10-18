@@ -4,15 +4,14 @@
  */
 package com.cache.job;
 
-import com.cache.config.MyCacheConfig;
+import com.cache.config.MyCacheConf;
+import com.cache.enums.ServerTypeEnum;
 import com.cache.persist.CachePersist;
 import com.cache.resolver.CacheService;
 import com.cache.sync.client.SalveClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.net.URISyntaxException;
 
 /**
  *
@@ -44,7 +43,7 @@ public class CacheJob {
      */
     @Scheduled(cron = "0 0/2 * * * ?")
     public void heart(){
-        if(MyCacheConfig.getConf("myCache.salve").equals("true")) {
+        if(MyCacheConf.serverType.equals(ServerTypeEnum.master_salve) && MyCacheConf.IsSalve.equals("true")) {
             try {
                 SalveClient.clientInit().send("salve to master health");
             } catch (Exception e) {

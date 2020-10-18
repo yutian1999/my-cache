@@ -5,13 +5,14 @@
 package com.cache.sync.client;
 
 import com.alibaba.fastjson.JSON;
+import com.cache.config.MyCacheConf;
+import com.cache.enums.ServerTypeEnum;
 import com.cache.help.CacheHelper;
 import com.cache.persist.Persist2Memory;
 import com.cache.sync.transfer.TransferData;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-
 import java.net.URI;
 
 /**
@@ -51,11 +52,16 @@ public class SocketClient extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         log.info("connect out");
+        int times = 0;
+        while (times++ < 5){
+            SalveClient.connect();
+        }
+        MyCacheConf.serverType = ServerTypeEnum.single;
+
     }
 
     @Override
     public void onError(Exception ex) {
         log.info("connect error = {}",ex.getMessage());
-        // todo 断线后重连
     }
 }

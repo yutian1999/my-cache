@@ -5,7 +5,8 @@
 package com.cache.resolver;
 
 import com.alibaba.fastjson.JSON;
-import com.cache.config.MyCacheConfig;
+import com.cache.config.MyCacheConf;
+import com.cache.enums.ServerTypeEnum;
 import com.cache.model.ContentModel;
 import com.cache.persist.CachePersist;
 import com.cache.sync.TextWebSocketFrameHandler;
@@ -41,7 +42,7 @@ public class CacheResolver {
             long l = System.currentTimeMillis() / 1000;
             expireMap.put(content.getKey(), l + expire);
         }
-        if(MyCacheConfig.getConf("myCache.master").equals("true")){
+        if(MyCacheConf.serverType.equals(ServerTypeEnum.master_salve) && MyCacheConf.isMaster.equals("true")){
             sendSave(content);
         }
         return "ok";
@@ -104,7 +105,7 @@ public class CacheResolver {
         }
         cache.remove(content.getKey());
         expireMap.remove(content.getKey());
-        if(MyCacheConfig.getConf("myCache.master").equals("true")){
+        if(MyCacheConf.serverType.equals(ServerTypeEnum.master_salve) && MyCacheConf.isMaster.equals("true")){
             sendDel(content);
         }
         return "ok";

@@ -3,8 +3,6 @@
  * Copyright (C) 2013-2020 All Rights Reserved.
  */
 package com.cache.resolver;
-
-import com.cache.config.MyCacheConfig;
 import com.cache.enums.MyCacheOperateEnum;
 import com.cache.model.ContentModel;
 import com.cache.model.TransferModel;

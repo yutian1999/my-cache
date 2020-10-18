@@ -18,7 +18,7 @@ public class CacheClientTest {
 
     @Before
     public void before(){
-        client = CacheClient.getClient("http:/192.168.1.45:8111/cache");
+        client = CacheClient.getClient("http://192.168.1.45:8111/cache");
     }
 
     /**

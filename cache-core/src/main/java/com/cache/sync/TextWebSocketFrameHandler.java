@@ -12,6 +12,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.SocketAddress;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,9 +31,8 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
         channel = ctx;
         //是否握手成功，升级为 Websocket 协议
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
-            ctx.writeAndFlush(new TextWebSocketFrame("salve connect master"));
             SocketAddress address = ctx.channel().remoteAddress();
-            log.info("salve connect master >> salve = {}",address);
+            log.info("salve connect master >> salveAddress = {}",address);
             // 握手成功后要进行文件同步 之后通过命令传播的模式进行主从同步
             sync(ctx);
         }

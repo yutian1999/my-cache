@@ -17,6 +17,8 @@ public enum  MyCacheOperateEnum {
 
     DEL,
 
-    SETNX;
+    SETNX,
+
+    CONNECT;
 
 }

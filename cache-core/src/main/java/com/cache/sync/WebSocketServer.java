@@ -21,14 +21,14 @@ public class WebSocketServer {
     /**
      * 单例
      */
-    private static WebSocketServer singleInstance = new WebSocketServer();
+    public static WebSocketServer singleInstance = new WebSocketServer();
 
     public static WebSocketServer inst() {
         return singleInstance;
     }
 
 
-    private final EventLoopGroup group = new NioEventLoopGroup();
+    public final EventLoopGroup group = new NioEventLoopGroup();
     private Channel channel;
 
 
