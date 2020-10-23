@@ -12,9 +12,9 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketSe
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
-
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
+
 @Slf4j
 public class WebSocketServer {
 
@@ -101,7 +101,6 @@ public class WebSocketServer {
 
             //WebSocketServerHandler、TextWebSocketFrameHandler 是自定义逻辑处理器，
             pipeline.addLast(new TextWebSocketFrameHandler());
-
         }
     }
 }

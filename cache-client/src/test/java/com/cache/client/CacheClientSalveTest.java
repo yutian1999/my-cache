@@ -14,11 +14,11 @@ import org.junit.Test;
  */
 public class CacheClientSalveTest {
 
-    CacheClient client;
+    CacheClient salveClient;
 
     @Before
     public void before(){
-        client = CacheClient.getClient("http:/192.168.1.44:8111/cache");
+        salveClient = CacheClient.getClient("http:/192.168.1.44:8111/cache");
     }
 
     /**
@@ -27,7 +27,7 @@ public class CacheClientSalveTest {
     @Test
     public void setTest()  {
 
-        String hello = client.set("hello", "value-", 20000);
+        String hello = salveClient.set("hello", "value-", 20000);
         System.out.println(hello);
     }
 
@@ -36,7 +36,7 @@ public class CacheClientSalveTest {
      */
     @Test
     public void setNxTest() {
-        String hello = client.setNx("lock1", "1", 2000000000);
+        String hello = salveClient.setNx("lock1", "1", 2000000000);
         System.out.println(hello);
     }
 
@@ -45,7 +45,7 @@ public class CacheClientSalveTest {
      */
     @Test
     public void getTest() {
-        String hello = client.get("test");
+        String hello = salveClient.get("hello");
         System.out.println(hello);
     }
 
@@ -54,6 +54,6 @@ public class CacheClientSalveTest {
      */
     @Test
     public void delTest() {
-        client.del("lock1");
+        salveClient.del("lock1");
     }
 }

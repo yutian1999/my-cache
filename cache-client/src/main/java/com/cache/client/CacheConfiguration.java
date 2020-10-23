@@ -61,7 +61,14 @@ public class CacheConfiguration  {
         if ("single".equals(property)){
             return clientRoute.get(ServerTypeEnum.single);
         }else {
-            return clientRoute.get(type);
+            CacheClient client = clientRoute.get(type);
+            if (ServerTypeEnum.master.equals(type)){
+                String connect = client.connect();
+                if ("connect time out".equals(connect)){
+                    client = clientRoute.get(ServerTypeEnum.salve);
+                }
+            }
+            return client;
         }
     }
 }

@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author wengyz
  * @version CacheClientTest.java, v 0.1 2020-10-10 5:38 下午
  */
-public class CacheClientTest {
+public class CacheMasterClientTest {
 
     CacheClient client;
 
@@ -26,9 +26,11 @@ public class CacheClientTest {
      */
     @Test
     public void setTest()  {
-
-        String set = client.set("node", "love", 200000);
-        System.out.println(set);
+//        for (int i = 0; i < 10; i++) {
+//            String set = client.set("key-"+i, "value-"+i, 200000);
+//        }
+        String set = client.set("master2salve", "success", 200000);
+//        System.out.println(set);
     }
 
     /**
@@ -54,6 +56,8 @@ public class CacheClientTest {
      */
     @Test
     public void delTest() {
-        client.del("node");
+        for (int i = 0; i < 1000; i++) {
+            String set = client.del("key-"+i);
+        }
     }
 }

@@ -23,6 +23,8 @@ import java.net.URI;
 @Slf4j
 public class SocketClient extends WebSocketClient {
 
+    int times = 0;
+
     public SocketClient(URI serverUri) {
         super(serverUri);
     }
@@ -52,7 +54,6 @@ public class SocketClient extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         log.info("connect out");
-        int times = 0;
         while (times++ < 5){
             SalveClient.connect();
         }

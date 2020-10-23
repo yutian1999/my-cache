@@ -8,6 +8,8 @@ import com.cache.enums.MyCacheOperateEnum;
 import com.cache.model.ContentModel;
 import com.cache.model.TransferModel;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -15,6 +17,8 @@ import okhttp3.*;
  * @version CacheClient.java, v 0.1 2020-10-10 1:39 下午
  */
 public class CacheClient {
+
+    private static Logger logger = LoggerFactory.getLogger(CacheClient.class);
 
     private static String requestUrl;
 
@@ -43,8 +47,9 @@ public class CacheClient {
             Response response = client.newCall(req).execute();
             return response.body().string();
         }catch (Exception e){
+            logger.error("request myCache error = ",e);
         }
-        return null;
+        return "connect time out";
     }
 
     /**

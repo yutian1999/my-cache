@@ -24,17 +24,17 @@ public class CacheService {
         ContentModel content = model.getContent();
 
         switch (operate){
-        case SET:
-            return CacheResolver.put(content);
-        case GET:
-            return CacheResolver.get(content);
-        case DEL:
-            return CacheResolver.del(content);
-        case SETNX:
-            return CacheResolver.setNx(content);
-        default:
-            return null;
-    }
+            case SET:
+                return CacheResolver.put(content);
+            case GET:
+                return CacheResolver.get(content);
+            case DEL:
+                return CacheResolver.del(content);
+            case SETNX:
+                return CacheResolver.setNx(content);
+            default:
+                return null;
+        }
     }
 
     /**

@@ -39,5 +39,4 @@ public class SalveClient {
     public static String buildUrl(){
         return "ws://" + MyCacheConf.serverUrl + ":9999/sync";
     }
-
 }

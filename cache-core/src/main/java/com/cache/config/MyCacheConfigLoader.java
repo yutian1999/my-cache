@@ -46,6 +46,5 @@ public class MyCacheConfigLoader {
         MyCacheConf.serverUrl = config.get(MyCacheConfKeys.MASTER_SERVER_URL);
         MyCacheConf.isMaster = config.get(MyCacheConfKeys.IS_MASTER);
         MyCacheConf.IsSalve = config.get(MyCacheConfKeys.IS_SALVE);
-
     }
 }

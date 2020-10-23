@@ -12,7 +12,6 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.SocketAddress;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,12 +21,12 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     private static ChannelHandlerContext channel;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg){
         log.info("master receive salve heart data ");
     }
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt){
         channel = ctx;
         //是否握手成功，升级为 Websocket 协议
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
